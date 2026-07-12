@@ -33,6 +33,7 @@ build/
 *.qm
 *.prl
 *.qmlls.ini
+CMakeLists.txt.user
 
 # Qt unit tests
 target_wrapper.*
