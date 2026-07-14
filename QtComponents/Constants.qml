@@ -19,4 +19,7 @@ QtObject {
     readonly property url infoIcon: "qrc:/Qt_Telemetry_Dashboard/assets/info.svg"
     readonly property url compass: "qrc:/Qt_Telemetry_Dashboard/assets/compass.svg"
     readonly property url compassArrow: "qrc:/Qt_Telemetry_Dashboard/assets/compassArrow.svg"
+    readonly property url attitudeIndicator: "qrc:/Qt_Telemetry_Dashboard/assets/attitudeIndicator.svg"
+    readonly property url ladderLeft: "qrc:/Qt_Telemetry_Dashboard/assets/ladderLeft.svg"
+    readonly property url ladderRight: "qrc:/Qt_Telemetry_Dashboard/assets/ladderRight.svg"
 }

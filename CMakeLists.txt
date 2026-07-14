@@ -28,6 +28,8 @@ qt_add_qml_module(appQt_Telemetry_Dashboard
         RESOURCES assets/error.svg assets/info.svg assets/warning.svg
         RESOURCES assets/compass.svg
         RESOURCES assets/compassArrow.svg
+        RESOURCES assets/attitudeIndicator.svg
+        RESOURCES assets/ladderLeft.svg assets/ladderRight.svg
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
