@@ -11,6 +11,30 @@ Window {
     visible: true
     color: Constants.defaultBackground
     title: qsTr("Drone Telemetry Dashboard")
+
+    property int rotationVal: 0
+
+    Timer {
+        interval: 20;
+        running: true;
+        repeat: true
+        onTriggered: {
+            if (rotationVal > 360) {
+                rotationVal = 0;
+            } else {
+                rotationVal++;
+            }
+        }
+    }
+
+    property var topRowData: [
+        {topString: "FLIGHT MODE", middleString: "AUTO"},
+        {topString: "ARMED", middleString: "Armed"},
+        {topString: "BATTERY", middleString: "76%", bottomString: "11.4V   8.7A"},
+        {topString: "ALTITUDE", middleString: "120.4 m", bottomString: "AGL: 118.7 m"},
+        {topString: "GROUND SPEED", middleString: "15.2 m/s"},
+        {topString: "HEADING", middleString: "134°", bottomString: "SE"},
+    ]
     Item {
         anchors.fill: parent
         anchors.margins: 10
@@ -21,47 +45,15 @@ Window {
                 id: topRow
                 width: parent.width
                 spacing: 10
-                DataCard {
-                    width: 200
-                    height: 120
-                    topString: "FLIGHT MODE"
-                    middleString: "AUTO"
-                }
-                DataCard {
-                    width: 200
-                    height: 120
-                    topString: "ARMED"
-                    middleString: "Armed"
-                }
-                DataCard {
-                    width: 200
-                    height: 120
-                    topString: "BATTERY"
-                    middleString: "76%"
-                    bottomString: "11.4V   8.7A"
-                }
-                DataCard {
-                    width: 200
-                    height: 120
-                    topString: "ALTITUDE"
-                    middleString: "120.4 m"
-                    bottomString: "AGL: 118.7 m"
-                    middleColor: Constants.defaultWhite
-                }
-                DataCard {
-                    width: 200
-                    height: 120
-                    topString: "GROUND SPEED"
-                    middleString: "15.2 m/s"
-                    middleColor: Constants.defaultWhite
-                }
-                DataCard {
-                    width: 200
-                    height: 120
-                    topString: "HEADING"
-                    middleString: "134°"
-                    bottomString: "SE"
-                    middleColor: Constants.defaultWhite
+                Repeater {
+                    model: topRowData
+                    delegate: DataCard {
+                        width: 200
+                        height: 120
+                        topString: modelData.topString
+                        middleString: modelData.middleString
+                        bottomString: modelData.bottomString ?? ""
+                    }
                 }
             }
             Row {
@@ -69,14 +61,42 @@ Window {
                 width: parent.width
                 spacing: 10
                 Rectangle {
-                    width: 350
-                    height: 220
+                    id: compass
+                    width: 340
+                    height: 340
                     radius: 5
                     color: Constants.cardBackground
                     border.color: Constants.defaultBorder
                     border.width: 1
+                    Label {
+                        anchors.top: parent.top
+                        anchors.topMargin: 5
+                        anchors.left: parent.left
+                        anchors.leftMargin: 10
+                        text: "COMPASS"
+                        font.pixelSize: 20
+                        font.bold: true
+                    }
+
+                    Image {
+                        width: 300
+                        height: 300
+                        anchors.centerIn: parent
+                        fillMode: Image.PreserveAspectFit
+                        source: Constants.compass
+                    }
+
+                    Image {
+                        width: 150
+                        height: 250
+                        anchors.centerIn: parent
+                        rotation: rotationVal
+                        fillMode: Image.PreserveAspectFit
+                        source: Constants.compassArrow
+                    }
                 }
                 BarListCard {
+                    id: vitals
                     width: 380
                     height: 340
                     cardTitle: "VITALS"
@@ -91,6 +111,7 @@ Window {
                     ]
                 }
                 BarListCard {
+                    id: systemStatus
                     width: 380
                     height: 170
                     cardTitle: "SYSTEM STATUS"
@@ -106,6 +127,7 @@ Window {
                 width: parent.width
                 spacing: 10
                 DataListCard {
+                    id: sensors
                     width: 280
                     height: 300
                     cardTitle: "SENSORS"
@@ -117,6 +139,12 @@ Window {
                         {title: "Accelerometer", statusCode: "ERROR"},
                         {title: "Gyroscope", statusCode: "OK"},
                     ]
+                }
+                MessageListCard {
+                    id: messages
+                    width: 480
+                    height: 300
+                    cardTitle: "MESSAGES / ALERTS"
                 }
             }
         }
