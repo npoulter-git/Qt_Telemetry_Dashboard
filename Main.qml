@@ -31,7 +31,7 @@ Window {
         {topString: "FLIGHT MODE", middleString: "AUTO"},
         {topString: "ARMED", middleString: "Armed"},
         {topString: "BATTERY", middleString: "76%", bottomString: "11.4V   8.7A"},
-        {topString: "ALTITUDE", middleString: "120.4 m", bottomString: "AGL: 118.7 m"},
+        {topString: "ALTITUDE", middleString: telemetry.altitude + " m", bottomString: "AGL: 118.7 m"},
         {topString: "GROUND SPEED", middleString: "15.2 m/s"},
         {topString: "HEADING", middleString: "134°", bottomString: "SE"},
     ]
